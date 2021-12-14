@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <vector>
 #include <algorithm>                                                                  
 #include <set>
@@ -52,6 +52,7 @@ void solve() {
     map <string, old> how_old;
     set <string> types;
     int line = 0;
+    set <string> all_kinds;
     while (getline(in,s)) {
         line++;
         string par[4];
@@ -72,6 +73,7 @@ void solve() {
         type_of_pet[par[1]].human.insert(par[0]);
         type_of_pet[par[1]].animal.insert(par[2]);
         how_many_names[par[2]].insert(par[1]);
+        all_kinds.insert(par[1]);
         if (how_old[par[1]].mini > stoi(par[3])) how_old[par[1]].mini = stoi(par[3]);
         if (how_old[par[1]].maxi < stoi(par[3])) how_old[par[1]].maxi = stoi(par[3]);
         types.insert(par[1]);
@@ -105,6 +107,10 @@ void solve() {
     case 2:
         cout << "Enter kind of animal: ";
         getline(cin, tp);
+        if (!all_kinds.count(tp)) {
+            cout << "There are no animals of this type!\n";
+            exit(0);
+        }
         cout << "\nowners: ";
         for (auto now : type_of_pet[tp].human) {
             if (now == " ") continue;
